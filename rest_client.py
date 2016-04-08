@@ -1,7 +1,7 @@
 import httplib
 import json
 
-ADDRESS = 'localhost:5656'
+ADDRESS = "localhost:5656"
 
 conn = httplib.HTTPConnection(ADDRESS)
 headers = {"Content-type": "application/json", "Accept": "text/plain"}
@@ -10,22 +10,20 @@ cmd = ["GET",'','']
 while 1:
     try:
         conn.connect()
-        conn.request(cmd[0],'/elo/api/v1.0/'+cmd[1],cmd[2],headers)
+        conn.request(cmd[0],"/elo/api/v1.0/"+cmd[1],cmd[2],headers)
     except:
-        print "Server cannot be reached at the moment. Retry? (y/n)"
-        if raw_input().lower() in ('y','yes'):
+        if raw_input("Server cannot be reached at the moment. Retry? (y/n)").lower() in ("y","yes"):
             conn.close()
             continue
         exit(0)
     rsp = conn.getresponse()
     try: data = json.loads(rsp.read())
     except ValueError:
-        print 'Invalid response from server. Retry? (y/n)'
-        if raw_input().lower() in ('y','yes'): continue
+        if raw_input("Invalid response from server. Retry? (y/n)").lower() in ("y","yes"): continue
         exit(0)
-    if data.get('content'):
-        print data['content'] + '\n'
-    menu = data.get('menu')
+    if data.get("content"):
+        print data["content"] + '\n'
+    menu = data.get("menu")
     if menu:
         for i,menu_element in enumerate(menu):
             print "%d. %s"%(i+1,menu_element[0])

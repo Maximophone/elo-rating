@@ -45,5 +45,9 @@ while 1:
             for alias,var in menu_element[3]:
                 values[var] = raw_input("%s: "%alias)
             cmd = [method,menu_element[2],json.dumps(values)]
+    elif data.get("error"):
+        if not raw_input("Error: %s. Retry? (y/n)"%data.get("error")).lower() in ("y","yes"): exit(0)
+    else:
+        if not raw_input("Unexpected response from server. Retry? (y/n)").lower() in ("y","yes"): exit(0)
 
 conn.close()
